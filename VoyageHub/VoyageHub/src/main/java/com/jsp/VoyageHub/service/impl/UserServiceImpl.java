@@ -4,6 +4,7 @@ import com.jsp.VoyageHub.dto.LoginRequest;
 import com.jsp.VoyageHub.entity.User;
 import com.jsp.VoyageHub.repository.UserRepository;
 import com.jsp.VoyageHub.service.UserService;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(LoginRequest loginRequest) {
-        return null;
+        return userRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPhone())
+                .orElseThrow();
     }
+
+
+//    @Override
+//    public User findByEmailAndPassword(Email email, String password) {
+//        return null;
+//    }
 }
