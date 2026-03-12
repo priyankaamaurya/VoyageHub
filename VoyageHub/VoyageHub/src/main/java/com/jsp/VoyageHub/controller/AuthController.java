@@ -30,10 +30,5 @@ public class AuthController {
                 .body(userService.login(loginRequest));
     }
 
-//    @PostMapping
-//    public ResponseEntity<User> findByEmailAndPassword(@RequestParam Email email, @RequestParam String password ){
-//
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .body(userService.findByEmailAndPassword(email, password));
-//    }
+
 }

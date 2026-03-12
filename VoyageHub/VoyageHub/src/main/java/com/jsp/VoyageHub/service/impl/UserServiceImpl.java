@@ -6,6 +6,7 @@ import com.jsp.VoyageHub.repository.UserRepository;
 import com.jsp.VoyageHub.service.UserService;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,20 +15,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public User register(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     @Override
     public User login(LoginRequest loginRequest) {
-        return userRepository.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPhone())
-                .orElseThrow();
+        return userRepository
+                .findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword())
+                .orElseThrow(() -> new RuntimeException("Invalid Email or Password"));
     }
 
-
-//    @Override
-//    public User findByEmailAndPassword(Email email, String password) {
-//        return null;
-//    }
 }
